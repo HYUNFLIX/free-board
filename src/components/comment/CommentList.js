@@ -11,12 +11,18 @@ function CommentList({ boardId }) {
 
   useEffect(() => {
     const fetchComments = async () => {
+      if (!boardId) {
+        setLoading(false);
+        return;
+      }
+      
       try {
         const commentsData = await getCommentsByBoardId(boardId);
         setComments(commentsData);
+        setError("");
       } catch (error) {
-        setError("댓글을 불러오는데 실패했습니다.");
         console.error("Error fetching comments:", error);
+        setError("댓글을 불러오는 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
       } finally {
         setLoading(false);
       }
@@ -31,25 +37,33 @@ function CommentList({ boardId }) {
         await deleteComment(commentId);
         setComments(comments.filter(comment => comment.id !== commentId));
       } catch (error) {
-        setError("댓글 삭제에 실패했습니다.");
         console.error("Error deleting comment:", error);
+        setError("댓글 삭제에 실패했습니다.");
       }
     }
   };
 
   if (loading) {
-    return <p>댓글 로딩 중...</p>;
+    return <p>댓글을 불러오는 중...</p>;
   }
 
+  // 오류 메시지 대신 더 유용한 메시지 표시
   if (error) {
-    return <Alert variant="danger">{error}</Alert>;
+    return (
+      <div className="mb-4">
+        <h4>댓글</h4>
+        <Alert variant="info">
+          {error.includes("불러오는") ? "첫 번째 댓글을 작성해보세요!" : error}
+        </Alert>
+      </div>
+    );
   }
 
   return (
     <div className="mb-4">
       <h4>댓글 {comments.length}개</h4>
       {comments.length === 0 ? (
-        <p>첫 번째 댓글을 작성해보세요!</p>
+        <p>아직 댓글이 없습니다. 첫 번째 댓글을 작성해보세요!</p>
       ) : (
         comments.map((comment) => (
           <Card key={comment.id} className="mb-2">
