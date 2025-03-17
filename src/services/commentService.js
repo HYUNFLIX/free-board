@@ -39,6 +39,8 @@ export const getCommentsByBoardId = async (boardId) => {
       orderBy("createdAt", "asc")
     );
     const querySnapshot = await getDocs(q);
+    
+    // 댓글이 없는 경우 빈 배열 반환
     return querySnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
