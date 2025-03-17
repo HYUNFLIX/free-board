@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, HashRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -18,7 +18,8 @@ import PrivateRoute from "./components/common/PrivateRoute";
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      {/* BrowserRouter 대신 HashRouter 사용 */}
+      <HashRouter>
         <div className="d-flex flex-column min-vh-100">
           <Header />
           <main className="container flex-grow-1 py-4">
@@ -46,7 +47,7 @@ function App() {
           </main>
           <Footer />
         </div>
-      </Router>
+      </HashRouter>
     </AuthProvider>
   );
 }
