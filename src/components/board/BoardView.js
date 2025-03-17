@@ -17,11 +17,17 @@ function BoardView() {
   useEffect(() => {
     const fetchBoard = async () => {
       try {
+        if (!id) {
+          setError("게시글 ID가 유효하지 않습니다.");
+          setLoading(false);
+          return;
+        }
+        
         const boardData = await getBoardById(id);
         setBoard(boardData);
       } catch (error) {
-        setError("게시글을 불러오는데 실패했습니다.");
         console.error("Error fetching board:", error);
+        setError("게시글을 불러오는데 실패했습니다.");
       } finally {
         setLoading(false);
       }
@@ -43,25 +49,40 @@ function BoardView() {
   };
 
   if (loading) {
-    return <p>로딩 중...</p>;
+    return <p className="p-3">로딩 중...</p>;
   }
 
   if (error) {
-    return <Alert variant="danger">{error}</Alert>;
+    return (
+      <Alert variant="danger" className="m-3">
+        {error}
+        <div className="mt-3">
+          <Link to="/" className="btn btn-primary">목록으로 돌아가기</Link>
+        </div>
+      </Alert>
+    );
   }
 
   if (!board) {
-    return <Alert variant="warning">게시글을 찾을 수 없습니다.</Alert>;
+    return (
+      <Alert variant="warning" className="m-3">
+        게시글을 찾을 수 없습니다.
+        <div className="mt-3">
+          <Link to="/" className="btn btn-primary">목록으로 돌아가기</Link>
+        </div>
+      </Alert>
+    );
   }
 
+  // 로그인한 사용자가 작성자인지 확인
   const isAuthor = currentUser && board.userId === currentUser.uid;
 
   return (
-    <div>
-      <Card className="mb-4">
+    <div className="container py-4">
+      <Card className="mb-4 shadow-sm">
         <Card.Header>
           <div className="d-flex justify-content-between align-items-center">
-            <h3>{board.title}</h3>
+            <h3 className="mb-0">{board.title}</h3>
             <div>
               <Link to="/" className="btn btn-secondary me-2">목록</Link>
               {isAuthor && (
@@ -89,7 +110,17 @@ function BoardView() {
       </Card>
 
       <CommentList boardId={id} />
-      {currentUser && <CommentWrite boardId={id} />}
+      
+      {currentUser ? (
+        <CommentWrite boardId={id} />
+      ) : (
+        <Alert variant="info" className="mt-3">
+          <div className="d-flex justify-content-between align-items-center">
+            <span>댓글을 작성하려면 로그인이 필요합니다.</span>
+            <Link to="/login" className="btn btn-primary">로그인하기</Link>
+          </div>
+        </Alert>
+      )}
     </div>
   );
 }
