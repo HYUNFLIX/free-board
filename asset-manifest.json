@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/free-board/static/css/main.79d19d76.css",
+    "main.js": "/free-board/static/js/main.b3034576.js",
+    "static/js/453.7733bc8c.chunk.js": "/free-board/static/js/453.7733bc8c.chunk.js",
+    "index.html": "/free-board/index.html",
+    "main.79d19d76.css.map": "/free-board/static/css/main.79d19d76.css.map",
+    "main.b3034576.js.map": "/free-board/static/js/main.b3034576.js.map",
+    "453.7733bc8c.chunk.js.map": "/free-board/static/js/453.7733bc8c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.79d19d76.css",
+    "static/js/main.b3034576.js"
+  ]
+}
