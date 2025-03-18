@@ -4,15 +4,15 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 // Firebase 구성 정보
-// 실제 구현 시 이 정보는 환경 변수로 관리하는 것이 좋습니다
+// Firebase 구성 정보를 환경 변수에서 불러옵니다.
 const firebaseConfig = {
-  apiKey: "AIzaSyAg01ZUcRLBpoWHXMJEWPGR-zdAhpEzTDg",
-  authDomain: "free-board-6ae8b.firebaseapp.com",
-  projectId: "free-board-6ae8b",
-  storageBucket: "free-board-6ae8b.firebasestorage.app",
-  messagingSenderId: "516035245965",
-  appId: "1:516035245965:web:1beaaf9b98cbf2676e6fc4",
-  measurementId: "G-17Q53T6R7Y"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 // Firebase 초기화
